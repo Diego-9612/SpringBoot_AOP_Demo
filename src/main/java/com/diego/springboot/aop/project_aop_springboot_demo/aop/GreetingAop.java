@@ -7,15 +7,17 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Order(2)
 @Aspect
 @Component
 public class GreetingAop {
 
     private Logger logger = LoggerFactory.getLogger(GreetingAop.class);
 
-    @Before("execution(String com.diego.springboot.aop.project_aop_springboot_demo.services.GreetingService.sayHello(..))")
+    @Before("GreetingServicePointsCuts.greetingLoggerPointCut()")
     public void loggerBefore(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -23,7 +25,7 @@ public class GreetingAop {
 
     }
 
-    @After("execution(String com.diego.springboot.aop.project_aop_springboot_demo.services.GreetingService.sayHello(..))")
+    @After("GreetingServicePointsCuts.greetingLoggerPointCut()")
     public void loggerAfter(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -31,7 +33,7 @@ public class GreetingAop {
 
     }
 
-    @AfterReturning("execution(String com.diego.springboot.aop.project_aop_springboot_demo.services.GreetingService.sayHello(..))")
+    @AfterReturning("GreetingServicePointsCuts.greetingLoggerPointCut()")
     public void loggerReturing(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -39,7 +41,7 @@ public class GreetingAop {
 
     }
 
-    @AfterThrowing("execution(String com.diego.springboot.aop.project_aop_springboot_demo.services.GreetingService.sayHelloError(..))")
+    @AfterThrowing("GreetingServicePointsCuts.greetingLoggerPointCut()")
     public void loggerThrowing(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -47,7 +49,7 @@ public class GreetingAop {
 
     }
 
-    @Around("execution(String com.diego.springboot.aop.project_aop_springboot_demo.services.GreetingService.*(..))")
+    @Around("GreetingServicePointsCuts.greetingLoggerPointCut()")
     public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable{
 
         String method = joinPoint.getSignature().getName();
